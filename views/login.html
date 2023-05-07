@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ilham Web | Add Project</title>
+
+    <!-- icon -->
+    <link rel="website icon" type="jpg" href="./public/images/logo.png">
+
+
+    <!-- font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <!-- style css -->
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/addProject.css">
+
+</head>
+<body>
+    
+    <!-- start navbar -->
+    <nav>
+        <div class="left-nav">
+            <img src="/public/images/logo.png" alt="">
+            <ul>
+                <li><a href="/" >Home</a></li>
+                <li><a href="/addProject" class="active">Add Project</a></li>
+            </ul>
+        </div>
+        
+        <div class="right-nav">
+            <ul>
+            <li><a href="/form-register">Register</a></li>
+            <li><a href="/form-login">Login</a></li>
+            <li><a href="/contact">Contact Me</a></li>
+            </ul>
+        </div>
+        <button onclick="showHamburger()" id="open">
+            <i class="fa fa-bars"></i>
+        </button>
+    </nav>
+
+    <div class="container-hamburger" id="container-hamburger">
+        <a href="/">Home</a>
+        <a href="/addProject">Add Project</a>
+        <a href="/contact">Contact</a>
+    </div>
+    <!-- end navbar -->
+
+    <form action="/add-add-project-detail" method="post">
+        <div class="container-addProject">
+            <div class="addProject">
+                <h1>LOGIN YOUR ACCOUNT</h1>
+
+                <div class="projectName">
+                    <label for="projectName">Email
+                        <input name="name" type="text" id="name" >
+                    </label>
+                </div>
+
+                <div class="projectName">
+                    <label for="projectName">Password
+                        <input name="name" type="text" id="name" >
+                    </label>
+                </div>
+
+                <div class="btn">
+                    <button type="submit">SUBMIT</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    
+    <!-- <script src="public/js/script.js"></script> -->
+    <script src="/public/js/navbar.js"></script>
+</body>
+</html>
