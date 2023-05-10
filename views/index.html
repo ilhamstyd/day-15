@@ -34,30 +34,48 @@
                 <li><a href="/addProject">Add Project</a></li>
             </ul>
         </div>
-    
-        <div class="right-nav">
+
+        {{if .FlashStatus}}
+        <div class="left-new">
             <ul>
-                <li><a href="#">Hello</a></li>
-                <li><a href="/logout">Logout</a></li>
-                <li><a href="/form-register">Resgister</a></li>
-                <li><a href="/form-login">Login</a></li>
-                <li><a href="/contact">Contact Me</a></li>
+            <li><a href="#">Hello,{{.FlashName}}</a></li>
+            <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
+        {{else}}
 
+        <div class="left-new">
+            <ul>
+            <li><a href="/form-register">Register</a></li>
+            <li><a href="/form-login">Login</a></li>
+            </ul>
+        </div>
+        {{end}}
+
+        <div class="right-nav">
+            <a href="/contact">Contact Me</a>
+        </div>
         <button onclick="showHamburger()" id="open">
             <i class="fa fa-bars"></i>
         </button>
     </nav>
-
     <!-- Hamburger menu -->
-    
     <div class="container-hamburger" id="container-hamburger">
         <a href="/">Home</a>
         <a href="/addProject">Add Project</a>
         <a href="/contactMe">Contact</a>
     </div>
     <!-- end navbar -->
+
+    {{if .FlashMessage}}
+    {{if .FlashStatus}}
+    <div class="alert alert-warning">
+    <strong>{{.FlashMessage}}</strong> 
+    </div>
+    {{else}}
+    <div></div>
+    {{end}}
+    {{end}}
 
     <div class="container">
         <div class="card">
@@ -120,8 +138,10 @@
                     </div>
                     <!-- end-technologies -->
                 </div>
+                {{if $.DataSession.IsLogin}}
                 <button><a href="/delete-addProject/{{$data.ID}}" style="color: aliceblue;">edit</a></button>
                 <button><a href="/delete-addProject/{{$data.ID}}" style="color: aliceblue;">delete</a></button>
+                {{end}}
                 <div style="float:right; margin: 10px">
                     <p style="font-size: 15px; color:grey">1 minutes ago</p>
                   </div>

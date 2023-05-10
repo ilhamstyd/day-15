@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ilham Web | Add Project</title>
+    <title>Ilham Web</title>
 
     <!-- icon -->
     <link rel="website icon" type="jpg" href="./public/images/logo.png">
@@ -35,17 +35,29 @@
             </ul>
         </div>
         
-        <div class="right-nav">
+        <div class="left-new">
             <ul>
             <li><a href="/form-register">Register</a></li>
             <li><a href="/form-login">Login</a></li>
-            <li><a href="/contact">Contact Me</a></li>
             </ul>
+        </div>
+        <div class="right-nav">
+            <a href="/contact">Contact Me</a>
         </div>
         <button onclick="showHamburger()" id="open">
             <i class="fa fa-bars"></i>
         </button>
     </nav>
+
+    {{if .FlashMessage}}
+    {{if .FlashStatus}}
+    <div class="alert alert-warning">
+        <strong>{{.FlashMessage}}</strong> 
+      </div>
+    {{else}}
+    <div></div>
+    {{end}}
+    {{end}}
 
     <div class="container-hamburger" id="container-hamburger">
         <a href="/">Home</a>
@@ -54,25 +66,35 @@
     </div>
     <!-- end navbar -->
 
-    <form action="/add-add-project-detail" method="post">
+
+    <form action="/login" method="post">
         <div class="container-addProject">
             <div class="addProject">
                 <h1>LOGIN YOUR ACCOUNT</h1>
 
+                {{if .FlashMessage}}
+                {{if .FlashStatus}}
+                <div class="alert alert-warning">
+                <strong>{{.FlashMessage}}</strong> 
+                </div>
+                {{else}}
+                <div></div>
+                {{end}}
+                {{end}}
                 <div class="projectName">
                     <label for="projectName">Email
-                        <input name="name" type="text" id="name" >
+                        <input name="email" type="email" id="email">
                     </label>
                 </div>
 
                 <div class="projectName">
                     <label for="projectName">Password
-                        <input name="name" type="text" id="name" >
+                        <input name="password" type="password" id="password" >
                     </label>
                 </div>
 
                 <div class="btn">
-                    <button type="submit">SUBMIT</button>
+                    <button type="submit">LOGIN</button>
                 </div>
             </div>
         </div>

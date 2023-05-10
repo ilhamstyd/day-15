@@ -28,16 +28,33 @@
     <!-- start navbar -->
     <nav>
         <div class="left-nav">
-            <img src="/public/images/logo.png" alt="">
+            <img src="./public/images/logo.png" alt="">
             <ul>
-                <li><a href="/" >Home</a></li>
-                <li><a href="/addProject" class="active">Add Project</a></li>
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/addProject">Add Project</a></li>
             </ul>
         </div>
+
         
+        {{if .DataSession.IsLogin}}
+        <div class="left-new">
+            <ul>
+            <li><a href="#">Hello, {{.DataSession.Name}}</a></li>
+            <li><a href="/logout">Logout</a></li>    
+            </ul>
+            {{else}}
+        </div>
+        <div class="left-new">
+            <ul>
+            <li><a href="/form-register">Register</a></li>
+            <li><a href="/form-login">Login</a></li>
+            </ul>
+            {{end}}
+        </div>
         <div class="right-nav">
             <a href="/contact">Contact Me</a>
         </div>
+
         <button onclick="showHamburger()" id="open">
             <i class="fa fa-bars"></i>
         </button>
@@ -50,11 +67,11 @@
     </div>
     <!-- end navbar -->
 
+    {{if .DataSession.IsLogin}}
     <form action="/add-add-project-detail" method="post">
         <div class="container-addProject">
             <div class="addProject">
                 <h1>ADD MY PROJECT</h1>
-
                 <div class="projectName">
                     <label for="projectName">Project Name
                         <input name="name" type="text" id="name" >
@@ -116,7 +133,7 @@
             </div>
         </div>
     </form>
-
+    {{end}}
 
     
     <!-- <script src="public/js/script.js"></script> -->

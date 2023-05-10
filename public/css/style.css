@@ -23,7 +23,7 @@ nav{
 
 .left-nav ul li{
     list-style-type: none;
-    padding-left: 40px;
+    padding-left: 30px;
 }
 
 .left-nav ul li a{
@@ -38,6 +38,39 @@ nav{
 }
 
 .left-nav ul li a.active{
+    color: #313030;
+    font-weight: 700;
+}
+
+.left-new{
+    display: flex;
+    align-items: center;
+    margin-left: 30%;
+}
+
+.left-new ul{
+    display: flex;
+    padding-left: 60px;
+}
+
+.left-new ul li{
+    list-style-type: none;
+    padding-left: 40px;
+    
+}
+
+.left-new ul li a{
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+}
+
+.left-new ul li a:hover{
+    color: #313030;
+    font-weight: 700;
+}
+
+.left-new ul li a.active{
     color: #313030;
     font-weight: 700;
 }

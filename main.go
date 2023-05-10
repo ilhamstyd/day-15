@@ -33,7 +33,7 @@ type User struct {
 }
 
 type SessionData struct {
-	Islogin bool
+	IsLogin bool
 	Name    string
 }
 
@@ -51,8 +51,6 @@ func main() {
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte("session"))))
 
 	// ROuting
-	e.GET("/Hello", helloworld)
-	e.GET("/about", about)
 	e.GET("/", home)
 	e.GET("/contact", contactMe)
 	e.GET("/addProject", addProject)
@@ -60,6 +58,7 @@ func main() {
 	e.GET("/delete-addProject/:id", deleteaddProject)
 	e.GET("/form-register", formRegister)
 	e.GET("/form-login", formLogin)
+	e.GET("/logout", logout)
 	e.POST("/register", register)
 	e.POST("/login", login)
 	e.POST("/add-add-project-detail", addaddprojectdetail)
@@ -68,18 +67,10 @@ func main() {
 
 }
 
-func helloworld(c echo.Context) error {
-	return c.String(http.StatusOK, "Hello World")
-}
-
-func about(c echo.Context) error {
-	return c.String(http.StatusOK, "ini adalah about anjay")
-}
-
 func home(c echo.Context) error {
-	var tmpl, err = template.ParseFiles("views/index.html")
+	tmpl, err := template.ParseFiles("views/index.html")
+
 	if err != nil {
-		// fmt.Println("tidak ada")
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
 
@@ -101,26 +92,29 @@ func home(c echo.Context) error {
 
 		result = append(result, each)
 	}
-
-	addProjects := map[string]interface{}{
-		"AddProject": result,
-	}
-
-	return tmpl.Execute(c.Response(), addProjects)
-
 	sess, _ := session.Get("session", c)
 
-	flash := map[string]interface{}{
+	if sess.Values["isLogin"] != true {
+		userData.IsLogin = false
+	} else {
+		userData.IsLogin = sess.Values["isLogin"].(bool)
+		userData.Name = sess.Values["name"].(string)
+	}
+
+	addProjects := map[string]interface{}{
 		"FlashStatus":  sess.Values["isLogin"],
 		"FlashMessage": sess.Values["message"],
 		"FlashName":    sess.Values["name"],
+		"AddProject":   result,
+		"DataSession":  userData,
 	}
 
 	delete(sess.Values, "message")
 	delete(sess.Values, "status")
 	sess.Save(c.Request(), c.Response())
 
-	return tmpl.Execute(c.Response(), flash)
+	return tmpl.Execute(c.Response(), addProjects)
+
 }
 
 func contactMe(c echo.Context) error {
@@ -138,7 +132,19 @@ func addProject(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": err.Error()})
 	}
 
-	return tmpl.Execute(c.Response(), nil)
+	sess, _ := session.Get("session", c)
+	if sess.Values["isLogin"] != true {
+		userData.IsLogin = false
+	} else {
+		userData.IsLogin = sess.Values["isLogin"].(bool)
+		userData.Name = sess.Values["name"].(string)
+	}
+
+	flash := map[string]interface{}{
+		"DataSession": userData,
+	}
+
+	return tmpl.Execute(c.Response(), flash)
 }
 
 func addProjectDetail(c echo.Context) error {
@@ -212,6 +218,7 @@ func formLogin(c echo.Context) error {
 
 	delete(sess.Values, "message")
 	delete(sess.Values, "alertStatus")
+	sess.Save(c.Request(), c.Response())
 
 	tmpl, err := template.ParseFiles("views/login.html")
 
@@ -235,7 +242,7 @@ func login(c echo.Context) error {
 	err = connection.Conn.QueryRow(context.Background(), "SELECT * FROM tb_user WHERE email=$1", email).Scan(&user.ID, &user.Name, &user.Email, &user.Password)
 
 	if err != nil {
-		return redirectWithMessage(c, "Email Salah !", false, "/form-login")
+		return redirectWithMessage(c, "Email Anda Salah !", false, "/form-login")
 	}
 
 	fmt.Println(user)
@@ -285,7 +292,7 @@ func logout(c echo.Context) error {
 	sess.Values["isLogin"] = false
 	sess.Save(c.Request(), c.Response())
 
-	return c.Redirect(http.StatusTemporaryRedirect, "/")
+	return c.Redirect(http.StatusTemporaryRedirect, "/form-login")
 }
 
 func redirectWithMessage(c echo.Context, message string, status bool, path string) error {
